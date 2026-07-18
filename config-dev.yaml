@@ -1,0 +1,163 @@
+# AgentHub Development Configuration
+env: development
+port: 3000
+hot_reload: true
+cdn_providers:
+  tailwind: "https://cdn.tailwindcss.com"
+  icons: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+
+mock_data:
+  users:
+    - id: usr_1
+      name: "Sophia Martinez"
+      email: "sophia@techcorp.com"
+      plan: "Enterprise"
+      status: "Active"
+    - id: usr_2
+      name: "Marcus Chen"
+      email: "marcus@devflow.io"
+      plan: "Pro"
+      status: "Active"
+    - id: usr_3
+      name: "Emma Watson"
+      email: "emma@logistics.net"
+      plan: "Standard"
+      status: "Suspended"
+    - id: usr_4
+      name: "David Kim"
+      email: "kim@agileventures.com"
+      plan: "Pro"
+      status: "Active"
+    - id: usr_5
+      name: "Clara Oswald"
+      email: "clara@tardis.org"
+      plan: "Enterprise"
+      status: "Active"
+
+  agents:
+    - id: agt_1
+      name: "SupportBot Pro"
+      owner: "Sophia Martinez"
+      status: "active"
+      prompt: "You are a professional customer support assistant. Always respond with empathy, analyze standard schemas, and resolve issues fast."
+      skills: ["Zendesk Integrator", "Semantic Search", "Auto-Responder"]
+    - id: agt_2
+      name: "DocuReader AI"
+      owner: "Marcus Chen"
+      status: "inactive"
+      prompt: "Parse uploaded financial PDF documents, extract line-item valuations, and export structured JSON objects matching client schemas."
+      skills: ["PDF Parser", "Google Sheets Sync"]
+    - id: agt_3
+      name: "CalManager"
+      owner: "Emma Watson"
+      status: "failing"
+      prompt: "Schedule cross-timezone team meetings. Cross-reference schedules, propose three optimal slots, and handle invite rejections gracefully."
+      skills: ["Google Calendar API", "Slack Notifier"]
+    - id: agt_4
+      name: "WebScout"
+      owner: "David Kim"
+      status: "active"
+      prompt: "Monitor tech news sites every 30 minutes. Aggregate articles concerning LLMs, tag categories, and draft daily bulleted newsletters."
+      skills: ["Web Crawler", "Newsletter drafter"]
+
+  skills:
+    - name: "Web Crawler"
+      desc: "Browses the open web and extracts clean text or structures datasets from target HTML pages safely."
+      agents_enabled: 1
+    - name: "Google Calendar API"
+      desc: "Coordinates appointments, reads attendee availability slots, drafts descriptions, and schedules dynamic invites."
+      agents_enabled: 1
+    - name: "PDF Parser"
+      desc: "Applies optical character recognition (OCR) and layout analysis to extract values from documents."
+      agents_enabled: 1
+    - name: "Slack Notifier"
+      desc: "Pushes real-time rich-text summaries and alert modules directly into pre-configured team channels."
+      agents_enabled: 1
+
+  contracts:
+    - client: "TechCorp"
+      agent: "SupportBot Pro"
+      skills: ["Zendesk Integrator", "Semantic Search", "Auto-Responder"]
+      start_date: "2026-01-01"
+      end_date: "2026-12-31"
+      amount_paid: "$1,800.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$1,000.00"
+        - item: "Zendesk Integrator Skill"
+          price: "$400.00"
+        - item: "Semantic Search Skill"
+          price: "$200.00"
+        - item: "Auto-Responder Skill"
+          price: "$200.00"
+    - client: "DevFlow"
+      agent: "DocuReader AI"
+      skills: ["PDF Parser", "Google Sheets Sync"]
+      start_date: "2026-02-15"
+      end_date: "2026-08-15"
+      amount_paid: "$900.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$500.00"
+        - item: "PDF Parser Skill"
+          price: "$250.00"
+        - item: "Google Sheets Sync"
+          price: "$150.00"
+    - client: "Logistics Net"
+      agent: "CalManager"
+      skills: ["Google Calendar API", "Slack Notifier"]
+      start_date: "2026-04-10"
+      end_date: "2026-10-10"
+      amount_paid: "$750.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$400.00"
+        - item: "Google Calendar API"
+          price: "$200.00"
+        - item: "Slack Notifier"
+          price: "$150.00"
+    - client: "Agile Ventures"
+      agent: "WebScout"
+      skills: ["Web Crawler", "Newsletter drafter"]
+      start_date: "2026-05-01"
+      end_date: "2026-11-01"
+      amount_paid: "$1,200.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$700.00"
+        - item: "Web Crawler Skill"
+          price: "$300.00"
+        - item: "Newsletter drafter"
+          price: "$200.00"
+
+  errors:
+    - timestamp: "2026-07-15 14:32:01"
+      agent: "CalManager"
+      type: "Critical"
+      msg: "OAuth Token expired: Unable to modify calendar resources on primary accounts."
+      trace: "Error: Token Expired\n  at google_api_auth.js:42:15\n  at processTicksAndRejections (node:internal/process/task_queues:95:5)"
+    - timestamp: "2026-07-15 12:11:45"
+      agent: "DocuReader AI"
+      type: "Warning"
+      msg: "Rate Limit reached: Google Sheets spreadsheet modifications queued temporarily."
+      trace: "Warning: HTTP 429 Too Many Requests\n  at sheets_api.js:109:12"
+    - timestamp: "2026-07-15 09:05:12"
+      agent: "CalManager"
+      type: "Critical"
+      msg: "Failed connection: slack.com host unreachable during alert dispatch."
+      trace: "Error: ECONNREFUSED 3.120.141.111:443\n  at tcp_connect.js:84:21"
+    - timestamp: "2026-07-14 22:45:10"
+      agent: "SupportBot Pro"
+      type: "Warning"
+      msg: "Context window saturation (8192 tokens). Invoking automatic summaries."
+      trace: "Info: Summary Triggered\n  at openai_bridge.js:321:9"
+    - timestamp: "2026-07-14 18:30:19"
+      agent: "WebScout"
+      type: "Critical"
+      msg: "Target site block: Cloudflare challenge triggered on news.ycombinator.com."
+      trace: "Error: Verification Required (403 Forbidden)\n  at scraper.js:203:31"
+    - timestamp: "2026-07-14 15:10:04"
+      agent: "SupportBot Pro"
+      type: "Info"
+      msg: "Periodic model health query resolved successfully (latency: 142ms)."
+      trace: "Success: OK\n  at monitor.js:12:4"

@@ -1,0 +1,978 @@
+Directory structure:
+└── mariascamino-agenthub_admin_panel_prototype/
+    ├── README.cn.md
+    ├── README.es.md
+    ├── README.md
+    ├── config-dev.yaml
+    ├── context.md
+    ├── design.md
+    ├── index.html
+    ├── learn.json
+    ├── server.py
+    └── specs.md
+
+================================================
+FILE: README.cn.md
+================================================
+# HTML Hello
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/html-hello.git)
+
+为使用 [gitpod.io](gitpod.io) 代码编辑器 4Geeks Academy 学生提供的最基础的样板。
+
+[![How to open html/css preview of my project in gitpod](https://github.com/4GeeksAcademy/Templates-Boilerplates/blob/master/assets/hello-html-intro.png?raw=true)](https://youtu.be/dfbDCMu_p-0)
+
+## 接下来怎么做？
+
+创建一个具有 [基本 HTML 页面结构](http://content.breatheco.de/lesson/what-is-html-learn-html#page-structure) 的 `index.html` 文件并通过使用以下命令，实时预览 Web 服务器提供的 HTML 页面：
+
+```sh
+$ pip3 install flask && python3 server.py
+```
+
+- 您可以根据需要创建任意数量的 HTML 文件
+- 您还可以使用放置在 `<head></head>` 标签之间的 `<link>` 标签创建 CSS 文件并将它们导入您的网站，如下所示：
+
+```html
+<head>
+  ...
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  ...
+</head>
+```
+
+- 如果你想使用 Tailwind CSS，也可以选择在同一个 `<head>` 中通过官方的 Tailwind CSS v4 CDN 引入：
+
+```html
+<head>
+  ...
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  ...
+</head>
+```
+
+
+
+================================================
+FILE: README.es.md
+================================================
+# HTML Hello
+
+El boilerplate más básico para cualquier estudiante de 4Geeks Academy, empieza tu primer sitio web desde cero.
+
+> Tienes un video tutorial sobre [cómo usar esta plantilla para crear tu primer sitio web aquí](https://youtu.be/dfbDCMu_p-0).
+
+## ¿Qué hacer a continuación?
+
+Crea un archivo `index.html` con [la estructura básica de HTML](https://4geeks.com/es/lesson/what-is-html-learn-html-es#estructura-de-pgina) y ve el resultado en vivo corriendo un servidor web utilizando el siguiente comando:
+
+```bash
+$ pip3 install flask && python3 server.py
+```
+
+- Puedes crear tantos archivos HTML cómo desees.
+- También puedes crear archivos CSS e importarlos en tu página web utilizando una etiqueta `<link>` ubicándola entre las etiquetas `<head></head>`, de la siguiente manera:
+
+```html
+<head>
+  ...
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  ...
+</head>
+```
+
+- Si deseas usar Tailwind CSS, agrégalo de forma opcional mediante el CDN oficial de Tailwind CSS v4 dentro del mismo `<head>`:
+
+```html
+<head>
+  ...
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  ...
+</head>
+```
+
+
+## Agradecimientos
+
+Esta y otras plantillas son utilizadas para [aprender a programar](https://4geeksacademy.com/es/aprender-a-programar/aprender-a-programar-desde-cero) por parte de los alumnos de 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp). 
+
+Realizado por [Alejandro Sánchez](https://twitter.com/alesanchezr) y muchos otros contribuyentes. 
+
+Conoce más sobre nuestros [Cursos de Programación](https://4geeksacademy.com/es/curso-de-programacion-desde-cero/?lang=es) para convertirte en [Full Stack Developer](https://4geeksacademy.com/es/desarrollador-full-stack/desarrollador-full-stack), o nuestro [Data Science Bootcamp](https://4geeksacademy.com/es/coding-bootcamps/curso-datascience-machine-learning).
+
+
+
+================================================
+FILE: README.md
+================================================
+# HTML Hello
+
+The most basic boilerplate for any 4Geeks Academy student, start your very first website from scratch.
+
+> There is a video tutorial on [how to use this template to create your very first website here](https://youtu.be/dfbDCMu_p-0).
+
+## What to do next?
+
+Create an `index.html` file with the [basic HTML structure](http://4geeks.com/lesson/what-is-html-learn-html#page-structure) and see it live by running a web-server using the following command:
+
+```bash
+$ pip3 install flask && python3 server.py
+```
+
+- You can create as many HTML files as you want.
+- You can also create CSS files and import them into your website using a `<link>` tag placed between the `<head></head>` tags, like this:
+
+```html
+<head>
+  ...
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  ...
+</head>
+```
+
+- If you want to use Tailwind CSS, add it optionally via the official Tailwind CSS v4 CDN inside the same `<head>`:
+
+```html
+<head>
+  ...
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  ...
+</head>
+```
+
+### Contributors
+
+This template was built as part of the [Full Stack Developer course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer) at [4Geeks Academy Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and [many other contributors](https://github.com/4GeeksAcademy/html-hello/graphs/contributors).
+
+You can find other templates and resources like this at the [school's GitHub page](https://github.com/4geeksacademy/).
+
+
+
+================================================
+FILE: config-dev.yaml
+================================================
+# AgentHub Development Configuration
+env: development
+port: 3000
+hot_reload: true
+cdn_providers:
+  tailwind: "https://cdn.tailwindcss.com"
+  icons: "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+
+mock_data:
+  users:
+    - id: usr_1
+      name: "Sophia Martinez"
+      email: "sophia@techcorp.com"
+      plan: "Enterprise"
+      status: "Active"
+    - id: usr_2
+      name: "Marcus Chen"
+      email: "marcus@devflow.io"
+      plan: "Pro"
+      status: "Active"
+    - id: usr_3
+      name: "Emma Watson"
+      email: "emma@logistics.net"
+      plan: "Standard"
+      status: "Suspended"
+    - id: usr_4
+      name: "David Kim"
+      email: "kim@agileventures.com"
+      plan: "Pro"
+      status: "Active"
+    - id: usr_5
+      name: "Clara Oswald"
+      email: "clara@tardis.org"
+      plan: "Enterprise"
+      status: "Active"
+
+  agents:
+    - id: agt_1
+      name: "SupportBot Pro"
+      owner: "Sophia Martinez"
+      status: "active"
+      prompt: "You are a professional customer support assistant. Always respond with empathy, analyze standard schemas, and resolve issues fast."
+      skills: ["Zendesk Integrator", "Semantic Search", "Auto-Responder"]
+    - id: agt_2
+      name: "DocuReader AI"
+      owner: "Marcus Chen"
+      status: "inactive"
+      prompt: "Parse uploaded financial PDF documents, extract line-item valuations, and export structured JSON objects matching client schemas."
+      skills: ["PDF Parser", "Google Sheets Sync"]
+    - id: agt_3
+      name: "CalManager"
+      owner: "Emma Watson"
+      status: "failing"
+      prompt: "Schedule cross-timezone team meetings. Cross-reference schedules, propose three optimal slots, and handle invite rejections gracefully."
+      skills: ["Google Calendar API", "Slack Notifier"]
+    - id: agt_4
+      name: "WebScout"
+      owner: "David Kim"
+      status: "active"
+      prompt: "Monitor tech news sites every 30 minutes. Aggregate articles concerning LLMs, tag categories, and draft daily bulleted newsletters."
+      skills: ["Web Crawler", "Newsletter drafter"]
+
+  skills:
+    - name: "Web Crawler"
+      desc: "Browses the open web and extracts clean text or structures datasets from target HTML pages safely."
+      agents_enabled: 1
+    - name: "Google Calendar API"
+      desc: "Coordinates appointments, reads attendee availability slots, drafts descriptions, and schedules dynamic invites."
+      agents_enabled: 1
+    - name: "PDF Parser"
+      desc: "Applies optical character recognition (OCR) and layout analysis to extract values from documents."
+      agents_enabled: 1
+    - name: "Slack Notifier"
+      desc: "Pushes real-time rich-text summaries and alert modules directly into pre-configured team channels."
+      agents_enabled: 1
+
+  contracts:
+    - client: "TechCorp"
+      agent: "SupportBot Pro"
+      skills: ["Zendesk Integrator", "Semantic Search", "Auto-Responder"]
+      start_date: "2026-01-01"
+      end_date: "2026-12-31"
+      amount_paid: "$1,800.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$1,000.00"
+        - item: "Zendesk Integrator Skill"
+          price: "$400.00"
+        - item: "Semantic Search Skill"
+          price: "$200.00"
+        - item: "Auto-Responder Skill"
+          price: "$200.00"
+    - client: "DevFlow"
+      agent: "DocuReader AI"
+      skills: ["PDF Parser", "Google Sheets Sync"]
+      start_date: "2026-02-15"
+      end_date: "2026-08-15"
+      amount_paid: "$900.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$500.00"
+        - item: "PDF Parser Skill"
+          price: "$250.00"
+        - item: "Google Sheets Sync"
+          price: "$150.00"
+    - client: "Logistics Net"
+      agent: "CalManager"
+      skills: ["Google Calendar API", "Slack Notifier"]
+      start_date: "2026-04-10"
+      end_date: "2026-10-10"
+      amount_paid: "$750.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$400.00"
+        - item: "Google Calendar API"
+          price: "$200.00"
+        - item: "Slack Notifier"
+          price: "$150.00"
+    - client: "Agile Ventures"
+      agent: "WebScout"
+      skills: ["Web Crawler", "Newsletter drafter"]
+      start_date: "2026-05-01"
+      end_date: "2026-11-01"
+      amount_paid: "$1,200.00"
+      breakdown:
+        - item: "Base Bot License"
+          price: "$700.00"
+        - item: "Web Crawler Skill"
+          price: "$300.00"
+        - item: "Newsletter drafter"
+          price: "$200.00"
+
+  errors:
+    - timestamp: "2026-07-15 14:32:01"
+      agent: "CalManager"
+      type: "Critical"
+      msg: "OAuth Token expired: Unable to modify calendar resources on primary accounts."
+      trace: "Error: Token Expired\n  at google_api_auth.js:42:15\n  at processTicksAndRejections (node:internal/process/task_queues:95:5)"
+    - timestamp: "2026-07-15 12:11:45"
+      agent: "DocuReader AI"
+      type: "Warning"
+      msg: "Rate Limit reached: Google Sheets spreadsheet modifications queued temporarily."
+      trace: "Warning: HTTP 429 Too Many Requests\n  at sheets_api.js:109:12"
+    - timestamp: "2026-07-15 09:05:12"
+      agent: "CalManager"
+      type: "Critical"
+      msg: "Failed connection: slack.com host unreachable during alert dispatch."
+      trace: "Error: ECONNREFUSED 3.120.141.111:443\n  at tcp_connect.js:84:21"
+    - timestamp: "2026-07-14 22:45:10"
+      agent: "SupportBot Pro"
+      type: "Warning"
+      msg: "Context window saturation (8192 tokens). Invoking automatic summaries."
+      trace: "Info: Summary Triggered\n  at openai_bridge.js:321:9"
+    - timestamp: "2026-07-14 18:30:19"
+      agent: "WebScout"
+      type: "Critical"
+      msg: "Target site block: Cloudflare challenge triggered on news.ycombinator.com."
+      trace: "Error: Verification Required (403 Forbidden)\n  at scraper.js:203:31"
+    - timestamp: "2026-07-14 15:10:04"
+      agent: "SupportBot Pro"
+      type: "Info"
+      msg: "Periodic model health query resolved successfully (latency: 142ms)."
+      trace: "Success: OK\n  at monitor.js:12:4"
+
+
+================================================
+FILE: context.md
+================================================
+# AgentHub Project Context & Vision
+
+## Product Overview
+AgentHub is a Software-as-a-Service (SaaS) platform where companies can rent pre-configured intelligent AI agents. These agents can be equipped with specialized capabilities called **Skills** (such as web browsing, document reading, calendar management, database querying, etc.) and deployed to solve specific business automation tasks.
+
+## Targeted Users
+- **System Administrators**: Internal users responsible for platform operations, billing, monitoring system health, and managing tenant contracts.
+- **Support Staff**: Team members who investigate agent failures, inspect logs, and manage user accounts.
+
+## Tech Stack Constraints
+- **HTML5 & Vanilla JavaScript**: The interface is built as a highly interactive single-page application (SPA) prototype inside a single `index.html` file (or multiple files linked natively) containing no external frameworks (no React, Vue, jQuery) and no build step.
+- **Tailwind CSS via CDN**: Styling is controlled entirely via Tailwind utility classes. No custom CSS stylesheets or inline `style` attributes are permitted.
+- **Tailwind Dark Mode**: Fully supported using Tailwind's `dark:` classes, toggled via a global theme controller which manages a `.dark` class on the `<html>` or `<body>` element.
+- **Zero Backend**: All state and representation data are hardcoded within the frontend scripts, simulating functional modals, collapsibles, dropdowns, and dashboard metrics dynamically.
+
+
+================================================
+FILE: design.md
+================================================
+# AgentHub Admin Panel Design Specification (SPECS.md Equivalency)
+
+This specification defines the visual hierarchy, state machines, component styling, and section-by-section behavioral requirements for the AgentHub Admin Panel.
+
+## Component Inventory (Reusable UI Library)
+
+### 1. Sidebar Navigation
+- **Visuals**: A persistent, fixed-width column on the left (or left-drawer layout for tablet views). Heavy dark border/fill in dark mode; clean light-grey boundary in light mode. Displays the "AgentHub" logo, brand mark, and a vertical list of the 6 core sections.
+- **Interactive States**: Displays an "active" indicator (e.g., solid accent background block and contrasting text color) representing the currently selected section. 
+
+### 2. Metric Card
+- **Visuals**: Solid background panel with rounded corners (`rounded-xl`), subtle outer border (`border border-slate-200 dark:border-slate-800`), and a small soft shadow. Includes:
+  - An icon container with an accent background tinted to match the metric's semantic context.
+  - A small, muted label.
+  - A large, bold numeric readout.
+- **Behavior**: Static preview metrics.
+
+### 3. Action Dropdown (The "⋮" Menu)
+- **Visuals**: A small absolute-positioned menu that overlays adjacent content, styled with list options, hover states, and clear boundaries.
+- **Behavior**: Clicking the trigger (`⋮` button) toggles the dropdown visible/invisible. Only one dropdown can be open at a time globally. Clicking anywhere outside the open dropdown's container automatically closes it.
+
+### 4. Modal Overlays
+- **Visuals**: A semi-transparent dark backdrop filling 100% of the screen height and width (`backdrop-blur-sm bg-slate-900/50`). Centered over the screen is the modal body.
+- **Behavior**: Opens when "View detail" or "Configure" is selected. Closes when clicking the explicit close button (typically an "X" or "Close" button) or when clicking anywhere directly on the backdrop outside the modal dialog box.
+
+### 5. Collapsible List (Skills List)
+- **Visuals**: A hidden or compact list box container with an action trigger button showing a caret icon (▼/▲).
+- **Behavior**: Clicking the trigger toggles the list open/closed. Uses CSS transition rules (`transition-all duration-300 max-h-0 overflow-hidden` changing to an explicit `max-h-96`) to guarantee a smooth dynamic layout transition.
+
+### 6. Badges & Indicators
+- **Visuals**: Small, low-contrast pill-shaped badges (`px-2.5 py-0.5 rounded-full text-xs font-semibold`). Colors indicate status dynamically (e.g., green for Active/Resolved, amber for Inactive/Warn, red for Failing/Error).
+
+---
+
+## Section-by-Section Specifications (Minimum 3 Specs per Section)
+
+### 1. Dashboard View
+1. **Metric Grid Layout**: Four distinct, responsive metric cards arranged in a 2x2 grid on medium screens and 1x4 on large screens, detailing:
+   - **Total Revenue (Month)**: Indigo theme.
+   - **Discount/Coupon Losses**: Amber theme.
+   - **Active Agents**: Emerald theme.
+   - **Failing Agents**: Rose theme.
+2. **Weekly Activity Chart Area**: A full-width placeholder area below the metric grid with a distinctive dashed border (`border-dashed border-2 border-slate-300 dark:border-slate-700`), a clean SVG graphic visualization representing a line/bar chart, and a centered description label.
+3. **Recent Events Ticker**: A miniature timeline feed showing recent actions or operational states of agents.
+
+### 2. User Management View
+1. **Interactive Table**: A dense table listing at least 5 hardcoded users with columns for `Name`, `Email Address`, `Subscription Plan` (Pro, Standard, Enterprise), and `Status` (Active, Suspended).
+2. **Dynamic Detail Modal**: Choosing "View detail" from the row action dropdown opens a modal containing comprehensive user records, complete with a placeholder user avatar, user registration date, lifetime value (LTV), and last login IP.
+3. **Delete Action Guard**: Selecting "Delete" triggers a browser-native confirmation alert (`confirm()`) or mock visual confirmation toast.
+
+### 3. Agent Management View
+1. **Agent Overview Cards/List**: A catalog listing at least 4 registered agents detailing: agent name, owner (the renting company user), current status badge (Active, Inactive, Failing), and their skill lists.
+2. **Animated Collapsible Skills**: Associated capabilities (e.g., "Web Crawler", "Outlook Writer") are collapsed by default. Clicking the caret button expands the panel downward with a smooth visual transition.
+3. **Prompt Configuration Drawer**: Selecting "Configure" opens a modal displaying the agent's exact system instructions in an editable HTML `<textarea>` element, allowing mock prompt engineering.
+
+### 4. Skills Catalog View
+1. **Context Banner**: A prominent panel explanation box at the top explaining the precise architecture of "Skills" inside the AgentHub infrastructure (how capabilities map to dynamic tool definitions).
+2. **Skill Detail Grid**: At least 4 distinct skill blocks containing: Skill Name, short description, status tag, and an indicator count showing the exact number of agents using this skill.
+3. **Dynamic Skills Modal**: "View detail" displays deep schema properties such as expected JSON input schemas and API parameters required.
+
+### 5. Agent Contracts View
+1. **Financial Ledger Table**: A tracking matrix of at least 4 active and historical billing agreements showing: Client, Rented Agent, Contracted Skills summary list, Contract Validity Dates, and total amount paid.
+2. **Detailed Itemized Invoices**: Choosing "View detail" displays an interactive invoice breakdown modal highlighting individual subscription skill costs (e.g., "Base Rate: $150", "Browsing Skill: $50") and billing frequencies.
+3. **Filter and Search State**: Visual mock dropdown controls for filtering contracts by "Active" versus "Expired" status.
+
+### 6. Error Log View
+1. **System Log Stream**: A real-time style log displaying at least 6 hardcoded error events. Columns: `Timestamp`, `Agent Name`, `Severity/Error Type Badge` (Critical, Warning, Info), and `Brief Message`.
+2. **Traceback Modal**: Choosing "View detail" loads a modal visualizing a code-style stack trace inside a container block, ideal for debugging.
+3. **Resolve Action Trigger**: Clicking "Mark as resolved" visualizes a state change by converting the severity badge to a green "Resolved" state and striking through the message.
+
+---
+
+## Acceptance Criteria
+1. **Unified SPA Engine**: Moving between pages replaces the content in the main viewport container without triggering a full page reload, while preserving application configurations.
+2. **Theme Switcher**: Clicking the Sun/Moon toggle in the header adds or removes the `.dark` class on the main root container. The dark mode state persists across section views.
+3. **Dropdown Boundaries**: Clicking inside a dropdown opens it; clicking outside or on a different dropdown closes it.
+4. **Modal Escapes**: Every modal remains closable by clicking the external backdrop container as well as an explicit close trigger button.
+5. **Fluid Collapsibles**: Agent details and skill cards expand and collapse using CSS transitions without abrupt visual jumps.
+6. **Unified Data Integrity**: The exact same agent name (e.g., "SupportBot Pro") must consistently propagate across Agent Management, Contracts, and the Error Logs to maintain realistic mock-data consistency.
+
+
+================================================
+FILE: index.html
+================================================
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentHub - Admin Panel</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configuración de Tailwind para activar el modo oscuro por clase
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex transition-colors duration-200">
+
+    <!-- 1. SIDEBAR NAVEGACIÓN PERSISTENTE -->
+    <aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col fixed h-full z-30 transition-colors duration-200">
+        <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center space-x-3">
+            <div class="h-9 w-9 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                A
+            </div>
+            <span class="font-bold text-lg tracking-wider text-slate-800 dark:text-white">AgentHub</span>
+        </div>
+        
+        <!-- Menú de Navegación -->
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <button onclick="switchSection('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-400">
+                <i class="fa-solid fa-chart-pie w-5"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="switchSection('users')" id="nav-users" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-users w-5"></i>
+                <span>Usuarios</span>
+            </button>
+            <button onclick="switchSection('agents')" id="nav-agents" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-robot w-5"></i>
+                <span>Agentes</span>
+            </button>
+            <button onclick="switchSection('skills')" id="nav-skills" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-wand-magic-sparkles w-5"></i>
+                <span>Habilidades</span>
+            </button>
+            <button onclick="switchSection('contracts')" id="nav-contracts" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-file-signature w-5"></i>
+                <span>Contratos</span>
+            </button>
+            <button onclick="switchSection('errors')" id="nav-errors" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-triangle-exclamation w-5"></i>
+                <span>Registro de Errores</span>
+            </button>
+        </nav>
+        
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400 text-center">
+            v1.0.0 Prototipo
+        </div>
+    </aside>
+
+    <!-- CONTENEDOR PRINCIPAL (Margen izquierdo para evitar que el sidebar lo tape) -->
+    <div class="flex-1 pl-64 flex flex-col min-h-screen">
+        
+        <!-- 2. BARRA SUPERIOR (HEADER) -->
+        <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between sticky top-0 z-20 transition-colors duration-200">
+            <h1 id="page-title" class="text-xl font-semibold text-slate-800 dark:text-white">Dashboard</h1>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Toggle de Modo Claro/Oscuro -->
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-slate-600 dark:text-slate-300">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+                <div class="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
+                <div class="flex items-center space-x-2">
+                    <div class="h-8 w-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-semibold text-xs">
+                        AD
+                    </div>
+                    <span class="text-sm font-medium hidden md:inline">Admin UI</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 3. CONTENIDO DINÁMICO DE LAS SECCIONES -->
+        <main class="flex-1 p-8">
+            <section id="section-dashboard" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Ingresos Totales</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">$128,940</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300 flex items-center justify-center">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-emerald-600 dark:text-emerald-300">+8.4% esta semana</p>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Pérdidas por Descuentos</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">$9,620</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-300 flex items-center justify-center">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-amber-600 dark:text-amber-300">2.1% del total vendido</p>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Agentes Activos</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">42</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-300 flex items-center justify-center">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-sky-600 dark:text-sky-300">+5 nuevos agentes hoy</p>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Agentes en Falla</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">4</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-300 flex items-center justify-center">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-rose-600 dark:text-rose-300">2 requieren atención inmediata</p>
+                    </article>
+                </div>
+
+                <section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-semibold text-slate-800 dark:text-white">Tendencia semanal de rendimiento</h2>
+                        <span class="text-xs text-slate-500">Últimos 7 días</span>
+                    </div>
+                    <div class="w-full overflow-x-auto">
+                        <svg viewBox="0 0 860 260" class="w-full min-w-[640px] h-[240px]" role="img" aria-label="Gráfico semanal de tendencia">
+                            <defs>
+                                <linearGradient id="trendLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#0ea5e9"></stop>
+                                    <stop offset="50%" stop-color="#8b5cf6"></stop>
+                                    <stop offset="100%" stop-color="#22c55e"></stop>
+                                </linearGradient>
+                                <linearGradient id="trendFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.25"></stop>
+                                    <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"></stop>
+                                </linearGradient>
+                            </defs>
+
+                            <rect x="0" y="0" width="860" height="260" fill="transparent"></rect>
+                            <g stroke="#64748b" stroke-opacity="0.25" stroke-width="1">
+                                <line x1="50" y1="40" x2="820" y2="40"></line>
+                                <line x1="50" y1="85" x2="820" y2="85"></line>
+                                <line x1="50" y1="130" x2="820" y2="130"></line>
+                                <line x1="50" y1="175" x2="820" y2="175"></line>
+                                <line x1="50" y1="220" x2="820" y2="220"></line>
+                            </g>
+
+                            <path d="M50,210 C120,190 160,160 220,155 C290,150 330,180 390,140 C450,100 500,80 560,95 C620,112 670,130 730,110 C770,98 795,86 820,70 L820,220 L50,220 Z" fill="url(#trendFill)"></path>
+                            <path d="M50,210 C120,190 160,160 220,155 C290,150 330,180 390,140 C450,100 500,80 560,95 C620,112 670,130 730,110 C770,98 795,86 820,70" fill="none" stroke="url(#trendLine)" stroke-width="4" stroke-linecap="round"></path>
+
+                            <g fill="#8b5cf6">
+                                <circle cx="50" cy="210" r="4"></circle>
+                                <circle cx="220" cy="155" r="4"></circle>
+                                <circle cx="390" cy="140" r="4"></circle>
+                                <circle cx="560" cy="95" r="4"></circle>
+                                <circle cx="730" cy="110" r="4"></circle>
+                                <circle cx="820" cy="70" r="4"></circle>
+                            </g>
+
+                            <g fill="#64748b" font-size="12" font-family="sans-serif">
+                                <text x="50" y="242">Lun</text>
+                                <text x="178" y="242">Mar</text>
+                                <text x="306" y="242">Mié</text>
+                                <text x="434" y="242">Jue</text>
+                                <text x="562" y="242">Vie</text>
+                                <text x="690" y="242">Sáb</text>
+                                <text x="805" y="242">Dom</text>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-users" class="hidden space-y-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Nombre</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Email</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Plan</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Estado</th>
+                                    <th scope="col" class="px-5 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">María Camino</td>
+                                    <td class="px-5 py-4">maria.camino@agenthub.com</td>
+                                    <td class="px-5 py-4">Enterprise</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Carlos Rivas</td>
+                                    <td class="px-5 py-4">carlos.rivas@novacorp.io</td>
+                                    <td class="px-5 py-4">Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Lucía Moreno</td>
+                                    <td class="px-5 py-4">lucia.moreno@aether.ai</td>
+                                    <td class="px-5 py-4">Basic</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Pendiente</span></td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Andrés Silva</td>
+                                    <td class="px-5 py-4">andres.silva@orionlabs.dev</td>
+                                    <td class="px-5 py-4">Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactivo</span></td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Sofía Cárdenas</td>
+                                    <td class="px-5 py-4">sofia.cardenas@zenstack.app</td>
+                                    <td class="px-5 py-4">Enterprise</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-agents" class="hidden space-y-6">
+                <p class="text-slate-500">Vista de agentes en construcción.</p>
+            </section>
+            <section id="section-skills" class="hidden space-y-6">
+                <p class="text-slate-500">Vista de habilidades en construcción.</p>
+            </section>
+            <section id="section-contracts" class="hidden space-y-6">
+                <p class="text-slate-500">Vista de contratos en construcción.</p>
+            </section>
+
+            <section id="section-errors" class="hidden space-y-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Timestamp</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Agente</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Severidad</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Mensaje</th>
+                                    <th scope="col" class="px-5 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-16 08:12:21</td>
+                                    <td class="px-5 py-4">Billing-Agent</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Alta</span></td>
+                                    <td class="px-5 py-4">Error al validar token del proveedor de pagos.</td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-16 08:06:09</td>
+                                    <td class="px-5 py-4">Onboarding-Agent</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300">Media</span></td>
+                                    <td class="px-5 py-4">Timeout en envío de correo de bienvenida.</td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-16 07:58:44</td>
+                                    <td class="px-5 py-4">Analytics-Agent</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Baja</span></td>
+                                    <td class="px-5 py-4">Reintento automático de consulta completado.</td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-16 07:41:33</td>
+                                    <td class="px-5 py-4">Contract-Agent</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Alta</span></td>
+                                    <td class="px-5 py-4">No se pudo firmar contrato por certificado inválido.</td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-16 07:27:11</td>
+                                    <td class="px-5 py-4">Support-Agent</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300">Media</span></td>
+                                    <td class="px-5 py-4">La cola de tickets superó el umbral de 200 items.</td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-16 07:03:02</td>
+                                    <td class="px-5 py-4">Sync-Agent</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Baja</span></td>
+                                    <td class="px-5 py-4">Diferencia de versión detectada y corregida en segundo intento.</td>
+                                    <td class="px-5 py-4 text-right"><button class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Clases del sidebar para estado activo e inactivo.
+        const ACTIVE_CLASSES = [
+            'bg-brand-50',
+            'text-brand-700',
+            'dark:bg-brand-950/50',
+            'dark:text-brand-400'
+        ];
+
+        const INACTIVE_CLASSES = [
+            'text-slate-600',
+            'hover:bg-slate-100',
+            'dark:text-slate-400',
+            'dark:hover:bg-slate-800'
+        ];
+
+        const SECTION_TITLES = {
+            dashboard: 'Dashboard',
+            users: 'Usuarios',
+            agents: 'Agentes',
+            skills: 'Habilidades',
+            contracts: 'Contratos',
+            errors: 'Registro de Errores'
+        };
+
+        // Muestra la sección activa y actualiza menú + título.
+        function switchSection(sectionId) {
+            document.querySelectorAll('main > section[id^="section-"]').forEach((section) => {
+                section.classList.add('hidden');
+            });
+
+            const activeSection = document.getElementById(`section-${sectionId}`);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('nav > button[id^="nav-"]').forEach((button) => {
+                button.classList.remove(...ACTIVE_CLASSES);
+                button.classList.add(...INACTIVE_CLASSES);
+            });
+
+            const activeButton = document.getElementById(`nav-${sectionId}`);
+            if (activeButton) {
+                activeButton.classList.remove(...INACTIVE_CLASSES);
+                activeButton.classList.add(...ACTIVE_CLASSES);
+            }
+
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) {
+                pageTitle.textContent = SECTION_TITLES[sectionId] || 'Sección';
+            }
+        }
+
+        // Sincroniza icono de tema con el estado actual.
+        function updateThemeIcon() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (!themeIcon) return;
+
+            const isDark = html.classList.contains('dark');
+            themeIcon.classList.remove('fa-moon', 'fa-sun');
+            themeIcon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    updateThemeIcon();
+                });
+            }
+
+            updateThemeIcon();
+            switchSection('dashboard');
+        });
+
+        window.switchSection = switchSection;
+    </script>
+</body>
+</html>
+
+
+================================================
+FILE: learn.json
+================================================
+{
+  "title": {
+    "en": "HTML/CSS Starter Template for beginners",
+    "es": "Plantilla Inicial de HTML/CSS para principiantes"
+  },
+  "description": {
+    "us": "This is a starter template for HTML/CSS projects. It includes a basic folder structure, a sample HTML file, and a CSS file to kickstart your project.",
+    "es": "Esta es una plantilla inicial para proyectos de HTML/CSS. Incluye una estructura básica de carpetas, un archivo HTML de ejemplo y un archivo CSS para iniciar tu proyecto."
+  },
+  "repository": "https://github.com/yourusername/html-css-starter-template",
+  "preview": "https://repository-images.githubusercontent.com/183094552/ef3d4980-78e0-11ea-8f81-31089e626628",
+  "projectType": "template",
+  "difficulty": "beginner",
+  "technologies": ["HTML", "CSS", "javascript"]
+}
+
+
+
+================================================
+FILE: server.py
+================================================
+try:
+    # try to import flask, or return error if has not been installed
+    from flask import Flask
+    from flask import send_from_directory
+except ImportError:
+    print("You don't have Flask installed, run `$ pip3 install flask` and try again")
+    exit(1)
+
+import os, subprocess
+
+static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), './')
+app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0 #disable cache
+
+# Serving the index file
+@app.route('/', methods=['GET'])
+def serve_dir_directory_index():
+    if os.path.exists("app.py"):
+        # if app.py exists we use the render function
+        out = subprocess.Popen(['python3','app.py'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        stdout,stderr = out.communicate()
+        return stdout if out.returncode == 0 else f"<pre style='color: red;'>{stdout.decode('utf-8')}</pre>"
+    if os.path.exists("index.html"):
+        return send_from_directory(static_file_dir, 'index.html')
+    else:
+        return "<h1 align='center'>404</h1><h2 align='center'>Missing index.html file</h2><p align='center'><img src='https://github.com/4GeeksAcademy/html-hello/blob/main/.vscode/rigo-baby.jpeg?raw=true' /></p>"
+
+# Serving any other image
+@app.route('/<path:path>', methods=['GET'])
+def serve_any_other_file(path):
+    if not os.path.isfile(os.path.join(static_file_dir, path)):
+        path = os.path.join(path, 'index.html')
+    response = send_from_directory(static_file_dir, path)
+    response.cache_control.max_age = 0 # avoid cache memory
+    return response
+
+app.run(host='0.0.0.0',port=3000, debug=True, extra_files=['./',])
+
+
+
+================================================
+FILE: specs.md
+================================================
+# AgentHub Admin Panel - Especificación Técnica (SPECS.md)
+
+Este documento sirve como el contrato de diseño y comportamiento interactivo para el prototipo del panel de administración de AgentHub.
+
+## 1. Descripción del Producto
+AgentHub es una plataforma SaaS donde las empresas pueden alquilar agentes de IA preconfigurados con habilidades específicas (lectura de documentos, navegación web, gestión de calendarios). El Panel de Administración permite a los operadores internos monitorear ingresos, gestionar cuentas de usuario, configurar prompts del sistema de los agentes, catalogar habilidades disponibles, auditar contratos de alquiler y revisar logs de errores en tiempo de ejecución.
+
+## 2. Stack Tecnológico y Restricciones
+- **HTML5 Semántico**: Uso estricto de etiquetas como `<aside>`, `<header>`, `<main>`, `<section>` y `<table>`.
+- **Styling**: Tailwind CSS cargado únicamente mediante CDN oficial. No se permiten archivos CSS externos ni atributos `style` en línea.
+- **Interactividad**: Vanilla JavaScript puro. Sin frameworks (no React, Vue, jQuery) ni herramientas de compilación.
+- **Persistencia de Datos**: Datos 100% hardcoded y consistentes entre las vistas del prototipo.
+- **Soporte de Tema**: Toggle global de modo claro y oscuro controlado mediante la clase `.dark` en la etiqueta de raíz (`<html>`).
+
+---
+
+## 3. Especificaciones de las Secciones (Mínimo 3 por Sección)
+
+### 3.1. Dashboard (Panel Principal)
+1. **Grid de Tarjetas Métricas**: Cuatro tarjetas con un layout responsive (1 columna en móvil, 2 en tablet, 4 en desktop) que muestran: Ingresos Totales (Mes), Pérdidas por Descuentos, Agentes Activos y Agentes en Falla. Cada tarjeta cuenta con un contenedor de icono con un color de acento temático y tipografía en negrita para el valor numérico.
+2. **Placeholder del Gráfico Semanal**: Un área de visualización de ancho completo con borde discontinuo (`border-dashed`), un gráfico SVG estilizado que simula las ejecuciones con éxito y un texto descriptivo centrado.
+3. **Persistencia Visual**: El estado general de los contadores numéricos (por ejemplo, 1 agente fallando y 3 activos) coincide exactamente con los listados de las secciones de Agentes y de Logs de Error.
+
+### 3.2. Gestión de Usuarios
+1. **Tabla de Datos**: Estructura de tabla semántica (`<table>`) con al menos 5 usuarios hardcoded que listan: Nombre, Email, Plan (Enterprise, Pro, Standard) y Estado (Activo, Suspendido).
+2. **Menú de Acción Dinámico (⋮)**: Un botón de menú de tres puntos por fila que despliega un dropdown posicionado de manera absoluta con las opciones "Ver detalle" y "Eliminar".
+3. **Modal de Detalle**: Al seleccionar "Ver detalle", se abre un modal superpuesto centrado con un fondo difuminado (`backdrop-blur-sm`). El modal muestra el avatar simulado, plan, estado de pago y fecha de registro del usuario. Puede cerrarse mediante un botón "Cerrar", un botón de "X" o haciendo clic en el backdrop.
+
+### 3.3. Gestión de Agentes
+1. **Tarjetas de Agentes**: Un listado de 4 agentes detallando: Nombre, Propietario (debe coincidir con la lista de usuarios), Estado operativo (Activo, Inactivo, Failing) y una lista colapsable de habilidades.
+2. **Habilidades Colapsables**: Las habilidades de cada agente están ocultas por defecto. Al hacer clic en un control con icono de caret (▼/▲), se expande la lista hacia abajo de manera fluida utilizando transiciones de CSS (`transition-all`).
+3. **Modal de Configuración**: La opción "Configurar" del menú de acción abre un modal con un área de texto editable (`<textarea>`) conteniendo el System Prompt del agente, simulando su reprogramación en vivo.
+
+### 3.4. Catálogo de Habilidades
+1. **Banner Informativo**: Un contenedor destacado (`bg-gradient-to-r`) al inicio de la sección que explica conceptualmente qué es una "Habilidad" dentro del ecosistema de AgentHub.
+2. **Grid de Habilidades**: Cuatro tarjetas de habilidades que muestran: Categoría en badge, Nombre de la Habilidad, Descripción de uso y un contador del número de agentes que la tienen habilitada.
+3. **Modal de Detalle Técnico**: La opción "Ver detalle" abre un modal mostrando el JSON Schema esperado para la entrada de datos de la API de dicha habilidad en un formato de código de programación.
+
+### 3.5. Contratos de Alquiler
+1. **Historial Financiero**: Una tabla con al menos 4 registros que muestra: Cliente, Agente Rentado, Fecha de Inicio, Fecha de Fin y el Monto Total Pagado.
+2. **Desglose de Facturación**: La opción "Ver detalle" del dropdown de acción abre un modal con un recibo interactivo desglosado detallando el costo de la licencia base y el precio individualizado por cada habilidad alquilada.
+3. **Consistencia de Datos**: Los nombres de los clientes y agentes vinculados coinciden estrictamente con los definidos en las secciones de Usuarios y Agentes.
+
+### 3.6. Registro de Errores (Error Log)
+1. **Historial de Excepciones**: Una tabla con al menos 6 entradas de error hardcoded que incluyen: Timestamp, Nombre del Agente, Tipo/Severidad (Critical, Warning, Info) en insignias de color, y Descripción corta.
+2. **Visor de Stacktrace**: "Ver detalle" del menú abre un modal que simula un bloque de código terminal (`pre` / `code`) estilizado con fondo oscuro y texto en rojo para examinar el trace técnico del error.
+3. **Resolución de Alertas**: La opción "Resolver" del dropdown de acción cambia dinámicamente el badge de error a un estado verde ("Resolved") y tacha el texto del log con un estilo visual atenuado.
+
+---
+
+## 4. Inventario de Componentes Compartidos
+- **Sidebar**: Barra de navegación lateral fija con enlaces reactivos y estilos visuales de estado activo.
+- **Tarjetas Métricas (Metric Cards)**: Paneles con bordes sutiles y sombras para destacar KPI importantes.
+- **Dropdown de Acción**: Menú contextual absoluto de fila activado por el botón `⋮`. Se cierra al hacer clic fuera de él.
+- **Modal de Superposición (Overlay Modal)**: Estructura centralizada reutilizable para renderizar detalles de forma dinámica con cierre por backdrop.
+- **Badges Semánticos**: Insignias redondeadas de colores para indicar estados (Emerald, Rose, Amber, Purple, Blue, Slate).
+
+---
+
+## 5. Criterios de Aceptación
+1. **Funcionamiento SPA**: Al cambiar de sección en el Sidebar, se ocultan y muestran las secciones mediante clases de Tailwind sin provocar un refresco de página.
+2. **Toggle de Color**: El interruptor de modo claro/oscuro altera la clase `.dark` del documento de manera global y el estado del color se mantiene intacto al navegar por las secciones.
+3. **Comportamiento Dropdown**: Solo un menú de acción `⋮` puede estar abierto a la vez en toda la aplicación. Se cierra automáticamente al dar clic fuera de su contenedor.
+4. **Cierre de Modales**: Todos los modales deben poder cerrarse al hacer clic en el botón con la "X", en el botón "Cerrar" del pie de página, o directamente sobre el fondo oscuro y difuminado de la pantalla.
+
+

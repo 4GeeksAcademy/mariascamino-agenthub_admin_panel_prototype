@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentHub - Admin Panel</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // Configuración de Tailwind para activar el modo oscuro por clase
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex transition-colors duration-200">
+
+    <!-- 1. SIDEBAR NAVEGACIÓN PERSISTENTE -->
+    <aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col fixed h-full z-30 transition-colors duration-200">
+        <div class="p-6 border-b border-slate-200 dark:border-slate-800 flex items-center space-x-3">
+            <div class="h-9 w-9 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
+                A
+            </div>
+            <span class="font-bold text-lg tracking-wider text-slate-800 dark:text-white">AgentHub</span>
+        </div>
+
+        <!-- Menú de Navegación -->
+        <nav class="flex-1 px-4 py-6 space-y-1">
+            <button onclick="switchSection('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all bg-brand-50 text-brand-700 dark:bg-brand-950/50 dark:text-brand-400">
+                <i class="fa-solid fa-chart-pie w-5"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="switchSection('users')" id="nav-users" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-users w-5"></i>
+                <span>Usuarios</span>
+            </button>
+            <button onclick="switchSection('agents')" id="nav-agents" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-robot w-5"></i>
+                <span>Agentes</span>
+            </button>
+            <button onclick="switchSection('skills')" id="nav-skills" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-wand-magic-sparkles w-5"></i>
+                <span>Habilidades</span>
+            </button>
+            <button onclick="switchSection('contracts')" id="nav-contracts" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-file-signature w-5"></i>
+                <span>Contratos</span>
+            </button>
+            <button onclick="switchSection('errors')" id="nav-errors" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-all">
+                <i class="fa-solid fa-triangle-exclamation w-5"></i>
+                <span>Registro de Errores</span>
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-400 text-center">
+            v1.0.0 Prototipo
+        </div>
+    </aside>
+
+    <!-- CONTENEDOR PRINCIPAL (Margen izquierdo para evitar que el sidebar lo tape) -->
+    <div class="flex-1 pl-64 flex flex-col min-h-screen">
+
+        <!-- 2. BARRA SUPERIOR (HEADER) -->
+        <header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-8 flex items-center justify-between sticky top-0 z-20 transition-colors duration-200">
+            <h1 id="page-title" class="text-xl font-semibold text-slate-800 dark:text-white">Dashboard</h1>
+
+            <div class="flex items-center space-x-4">
+                <!-- Toggle de Modo Claro/Oscuro -->
+                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-slate-600 dark:text-slate-300">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+                <div class="h-8 w-px bg-slate-200 dark:bg-slate-800"></div>
+                <div class="flex items-center space-x-2">
+                    <div class="h-8 w-8 rounded-full bg-brand-500 text-white flex items-center justify-center font-semibold text-xs">
+                        AD
+                    </div>
+                    <span class="text-sm font-medium hidden md:inline">Admin UI</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- 3. CONTENIDO DINÁMICO DE LAS SECCIONES -->
+        <main class="flex-1 p-8">
+            <section id="section-dashboard" class="space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Ingresos Totales</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">$128,940</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-300 flex items-center justify-center">
+                                <i class="fa-solid fa-sack-dollar"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-emerald-600 dark:text-emerald-300">+8.4% esta semana</p>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Pérdidas por Descuentos</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">$9,620</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-300 flex items-center justify-center">
+                                <i class="fa-solid fa-tags"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-amber-600 dark:text-amber-300">2.1% del total vendido</p>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Agentes Activos</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">2</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-300 flex items-center justify-center">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-sky-600 dark:text-sky-300">SupportBot Pro y WebScout</p>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-slate-500">Agentes en Falla</p>
+                                <p class="mt-2 text-2xl font-bold text-slate-900 dark:text-white">1</p>
+                            </div>
+                            <div class="h-10 w-10 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-300 flex items-center justify-center">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-xs text-rose-600 dark:text-rose-300">CalManager requiere atención inmediata</p>
+                    </article>
+                </div>
+
+                <section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-semibold text-slate-800 dark:text-white">Tendencia semanal de rendimiento</h2>
+                        <span class="text-xs text-slate-500">Últimos 7 días</span>
+                    </div>
+                    <div class="w-full overflow-x-auto">
+                        <svg viewBox="0 0 860 260" class="w-full min-w-[640px] h-[240px]" role="img" aria-label="Gráfico semanal de tendencia">
+                            <defs>
+                                <linearGradient id="trendLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#0ea5e9"></stop>
+                                    <stop offset="50%" stop-color="#8b5cf6"></stop>
+                                    <stop offset="100%" stop-color="#22c55e"></stop>
+                                </linearGradient>
+                                <linearGradient id="trendFill" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.25"></stop>
+                                    <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"></stop>
+                                </linearGradient>
+                            </defs>
+
+                            <rect x="0" y="0" width="860" height="260" fill="transparent"></rect>
+                            <g stroke="#64748b" stroke-opacity="0.25" stroke-width="1">
+                                <line x1="50" y1="40" x2="820" y2="40"></line>
+                                <line x1="50" y1="85" x2="820" y2="85"></line>
+                                <line x1="50" y1="130" x2="820" y2="130"></line>
+                                <line x1="50" y1="175" x2="820" y2="175"></line>
+                                <line x1="50" y1="220" x2="820" y2="220"></line>
+                            </g>
+
+                            <path d="M50,210 C120,190 160,160 220,155 C290,150 330,180 390,140 C450,100 500,80 560,95 C620,112 670,130 730,110 C770,98 795,86 820,70 L820,220 L50,220 Z" fill="url(#trendFill)"></path>
+                            <path d="M50,210 C120,190 160,160 220,155 C290,150 330,180 390,140 C450,100 500,80 560,95 C620,112 670,130 730,110 C770,98 795,86 820,70" fill="none" stroke="url(#trendLine)" stroke-width="4" stroke-linecap="round"></path>
+
+                            <g fill="#8b5cf6">
+                                <circle cx="50" cy="210" r="4"></circle>
+                                <circle cx="220" cy="155" r="4"></circle>
+                                <circle cx="390" cy="140" r="4"></circle>
+                                <circle cx="560" cy="95" r="4"></circle>
+                                <circle cx="730" cy="110" r="4"></circle>
+                                <circle cx="820" cy="70" r="4"></circle>
+                            </g>
+
+                            <g fill="#64748b" font-size="12" font-family="sans-serif">
+                                <text x="50" y="242">Lun</text>
+                                <text x="178" y="242">Mar</text>
+                                <text x="306" y="242">Mié</text>
+                                <text x="434" y="242">Jue</text>
+                                <text x="562" y="242">Vie</text>
+                                <text x="690" y="242">Sáb</text>
+                                <text x="805" y="242">Dom</text>
+                            </g>
+                        </svg>
+                    </div>
+                </section>
+
+                <section class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-semibold text-slate-800 dark:text-white">Eventos recientes</h2>
+                        <span class="text-xs text-slate-500">Actividad en vivo</span>
+                    </div>
+                    <ul id="events-ticker" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-red-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200"><span class="font-medium">CalManager</span> reportó un error crítico: token OAuth expirado.</p>
+                                <p class="text-xs text-slate-400">2026-07-15 14:32</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-amber-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200"><span class="font-medium">DocuReader AI</span> alcanzó el límite de tasa en Google Sheets.</p>
+                                <p class="text-xs text-slate-400">2026-07-15 12:11</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-red-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200"><span class="font-medium">CalManager</span> falló al conectar con Slack durante un envío de alerta.</p>
+                                <p class="text-xs text-slate-400">2026-07-15 09:05</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-amber-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200"><span class="font-medium">SupportBot Pro</span> resumió automáticamente su contexto por saturación de tokens.</p>
+                                <p class="text-xs text-slate-400">2026-07-14 22:45</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-red-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200"><span class="font-medium">WebScout</span> fue bloqueado por un challenge de Cloudflare en news.ycombinator.com.</p>
+                                <p class="text-xs text-slate-400">2026-07-14 18:30</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200"><span class="font-medium">WebScout</span> fue activado para el cliente Andrés Silva.</p>
+                                <p class="text-xs text-slate-400">2026-07-03 10:00</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-sky-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200">Se registró un contrato de prueba para <span class="font-medium">CalManager</span> (cliente Lucía Moreno).</p>
+                                <p class="text-xs text-slate-400">2026-07-01 00:00</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 text-sm">
+                            <span class="mt-1 h-2 w-2 rounded-full bg-red-500 flex-shrink-0"></span>
+                            <div>
+                                <p class="text-slate-700 dark:text-slate-200">El contrato de <span class="font-medium">DocuReader AI</span> venció y el agente quedó inactivo.</p>
+                                <p class="text-xs text-slate-400">2025-02-18 00:00</p>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </section>
+
+            <section id="section-users" class="hidden space-y-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Nombre</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Email</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Plan</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Estado</th>
+                                    <th scope="col" class="px-5 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">María Camino</td>
+                                    <td class="px-5 py-4">maria.camino@agenthub.com</td>
+                                    <td class="px-5 py-4">Enterprise</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'user-0')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button>
+                                        <div id="dropdown-user-0" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openUserModal(0)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteUser(0)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Carlos Rivas</td>
+                                    <td class="px-5 py-4">carlos.rivas@novacorp.io</td>
+                                    <td class="px-5 py-4">Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'user-1')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button>
+                                        <div id="dropdown-user-1" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openUserModal(1)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteUser(1)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Lucía Moreno</td>
+                                    <td class="px-5 py-4">lucia.moreno@aether.ai</td>
+                                    <td class="px-5 py-4">Basic</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Pendiente</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'user-2')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button>
+                                        <div id="dropdown-user-2" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openUserModal(2)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteUser(2)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Andrés Silva</td>
+                                    <td class="px-5 py-4">andres.silva@orionlabs.dev</td>
+                                    <td class="px-5 py-4">Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactivo</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'user-3')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button>
+                                        <div id="dropdown-user-3" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openUserModal(3)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteUser(3)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Sofía Cárdenas</td>
+                                    <td class="px-5 py-4">sofia.cardenas@zenstack.app</td>
+                                    <td class="px-5 py-4">Enterprise</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'user-4')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de fila">⋮</button>
+                                        <div id="dropdown-user-4" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openUserModal(4)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteUser(4)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-agents" class="hidden space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-semibold text-slate-800 dark:text-white">SupportBot Pro</h3>
+                                <p class="text-xs text-slate-500 mt-1">Propietario: María Camino</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(event, 'agent-0')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de agente">⋮</button>
+                                    <div id="dropdown-agent-0" class="hidden absolute right-0 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                        <button onclick="openAgentModal(0)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                                        <button onclick="deleteAgent(0)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="toggleSkills(0)" class="mt-3 text-xs font-medium text-brand-600 dark:text-brand-400 flex items-center gap-1">
+                            <span>Habilidades (3)</span>
+                            <i id="skills-caret-0" class="fa-solid fa-caret-down transition-transform"></i>
+                        </button>
+                        <div id="skills-list-0" class="max-h-0 overflow-hidden transition-all duration-300">
+                            <ul class="mt-2 pl-1 space-y-1 text-sm text-slate-600 dark:text-slate-300 list-disc list-inside">
+                                <li>Zendesk Integrator</li>
+                                <li>Semantic Search</li>
+                                <li>Auto-Responder</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-semibold text-slate-800 dark:text-white">DocuReader AI</h3>
+                                <p class="text-xs text-slate-500 mt-1">Propietario: Carlos Rivas</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-full text-xs bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactivo</span>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(event, 'agent-1')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de agente">⋮</button>
+                                    <div id="dropdown-agent-1" class="hidden absolute right-0 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                        <button onclick="openAgentModal(1)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                                        <button onclick="deleteAgent(1)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="toggleSkills(1)" class="mt-3 text-xs font-medium text-brand-600 dark:text-brand-400 flex items-center gap-1">
+                            <span>Habilidades (2)</span>
+                            <i id="skills-caret-1" class="fa-solid fa-caret-down transition-transform"></i>
+                        </button>
+                        <div id="skills-list-1" class="max-h-0 overflow-hidden transition-all duration-300">
+                            <ul class="mt-2 pl-1 space-y-1 text-sm text-slate-600 dark:text-slate-300 list-disc list-inside">
+                                <li>PDF Parser</li>
+                                <li>Google Sheets Sync</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-semibold text-slate-800 dark:text-white">CalManager</h3>
+                                <p class="text-xs text-slate-500 mt-1">Propietario: Lucía Moreno</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-full text-xs bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">En falla</span>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(event, 'agent-2')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de agente">⋮</button>
+                                    <div id="dropdown-agent-2" class="hidden absolute right-0 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                        <button onclick="openAgentModal(2)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                                        <button onclick="deleteAgent(2)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="toggleSkills(2)" class="mt-3 text-xs font-medium text-brand-600 dark:text-brand-400 flex items-center gap-1">
+                            <span>Habilidades (2)</span>
+                            <i id="skills-caret-2" class="fa-solid fa-caret-down transition-transform"></i>
+                        </button>
+                        <div id="skills-list-2" class="max-h-0 overflow-hidden transition-all duration-300">
+                            <ul class="mt-2 pl-1 space-y-1 text-sm text-slate-600 dark:text-slate-300 list-disc list-inside">
+                                <li>Google Calendar API</li>
+                                <li>Slack Notifier</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h3 class="font-semibold text-slate-800 dark:text-white">WebScout</h3>
+                                <p class="text-xs text-slate-500 mt-1">Propietario: Andrés Silva</p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span>
+                                <div class="relative">
+                                    <button onclick="toggleDropdown(event, 'agent-3')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de agente">⋮</button>
+                                    <div id="dropdown-agent-3" class="hidden absolute right-0 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                        <button onclick="openAgentModal(3)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Configurar</button>
+                                        <button onclick="deleteAgent(3)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="toggleSkills(3)" class="mt-3 text-xs font-medium text-brand-600 dark:text-brand-400 flex items-center gap-1">
+                            <span>Habilidades (2)</span>
+                            <i id="skills-caret-3" class="fa-solid fa-caret-down transition-transform"></i>
+                        </button>
+                        <div id="skills-list-3" class="max-h-0 overflow-hidden transition-all duration-300">
+                            <ul class="mt-2 pl-1 space-y-1 text-sm text-slate-600 dark:text-slate-300 list-disc list-inside">
+                                <li>Web Crawler</li>
+                                <li>Newsletter drafter</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section id="section-skills" class="hidden space-y-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Habilidad</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Categoría</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Agentes que la usan</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Estado</th>
+                                    <th scope="col" class="px-5 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Zendesk Integrator</td>
+                                    <td class="px-5 py-4">Integraciones</td>
+                                    <td class="px-5 py-4">SupportBot Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activa</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-0')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-0" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(0)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(0)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Semantic Search</td>
+                                    <td class="px-5 py-4">IA / NLP</td>
+                                    <td class="px-5 py-4">SupportBot Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activa</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-1')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-1" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(1)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(1)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Auto-Responder</td>
+                                    <td class="px-5 py-4">Automatización</td>
+                                    <td class="px-5 py-4">SupportBot Pro</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activa</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-2')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-2" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(2)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(2)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">PDF Parser</td>
+                                    <td class="px-5 py-4">Documentos</td>
+                                    <td class="px-5 py-4">DocuReader AI</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactiva</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-3')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-3" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(3)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(3)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Google Sheets Sync</td>
+                                    <td class="px-5 py-4">Productividad</td>
+                                    <td class="px-5 py-4">DocuReader AI</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200">Inactiva</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-4')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-4" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(4)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(4)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Google Calendar API</td>
+                                    <td class="px-5 py-4">Productividad</td>
+                                    <td class="px-5 py-4">CalManager</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">En falla</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-5')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-5" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(5)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(5)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Slack Notifier</td>
+                                    <td class="px-5 py-4">Comunicación</td>
+                                    <td class="px-5 py-4">CalManager</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300">En falla</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-6')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-6" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(6)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(6)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Web Crawler</td>
+                                    <td class="px-5 py-4">Web</td>
+                                    <td class="px-5 py-4">WebScout</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activa</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-7')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-7" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(7)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(7)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">Newsletter drafter</td>
+                                    <td class="px-5 py-4">Contenido</td>
+                                    <td class="px-5 py-4">WebScout</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activa</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'skill-8')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de habilidad">⋮</button>
+                                        <div id="dropdown-skill-8" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openSkillModal(8)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteSkill(8)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Eliminar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <section id="section-contracts" class="hidden space-y-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Agente</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Cliente</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Plan</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Tarifa mensual</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Renovación</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Estado</th>
+                                    <th scope="col" class="px-5 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">SupportBot Pro</td>
+                                    <td class="px-5 py-4">María Camino</td>
+                                    <td class="px-5 py-4">Enterprise</td>
+                                    <td class="px-5 py-4">$1,200 / mes</td>
+                                    <td class="px-5 py-4">2026-11-03</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'contract-0')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de contrato">⋮</button>
+                                        <div id="dropdown-contract-0" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openContractModal(0)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteContract(0)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Cancelar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">DocuReader AI</td>
+                                    <td class="px-5 py-4">Carlos Rivas</td>
+                                    <td class="px-5 py-4">Pro</td>
+                                    <td class="px-5 py-4">$450 / mes</td>
+                                    <td class="px-5 py-4">2025-02-18</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Vencido</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'contract-1')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de contrato">⋮</button>
+                                        <div id="dropdown-contract-1" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openContractModal(1)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteContract(1)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Cancelar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">CalManager</td>
+                                    <td class="px-5 py-4">Lucía Moreno</td>
+                                    <td class="px-5 py-4">Basic</td>
+                                    <td class="px-5 py-4">$0 / mes (prueba)</td>
+                                    <td class="px-5 py-4">2025-07-01</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Pendiente</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'contract-2')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de contrato">⋮</button>
+                                        <div id="dropdown-contract-2" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openContractModal(2)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteContract(2)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Cancelar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-5 py-4 font-medium">WebScout</td>
+                                    <td class="px-5 py-4">Andrés Silva</td>
+                                    <td class="px-5 py-4">Pro</td>
+                                    <td class="px-5 py-4">$600 / mes</td>
+                                    <td class="px-5 py-4">2026-08-22</td>
+                                    <td class="px-5 py-4"><span class="px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">Activo</span></td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'contract-3')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de contrato">⋮</button>
+                                        <div id="dropdown-contract-3" class="hidden absolute right-5 top-10 w-40 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openContractModal(3)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="deleteContract(3)" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">Cancelar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="section-errors" class="hidden space-y-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-300">
+                                <tr>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Timestamp</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Agente</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Severidad</th>
+                                    <th scope="col" class="px-5 py-3 font-semibold">Mensaje</th>
+                                    <th scope="col" class="px-5 py-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800 text-slate-700 dark:text-slate-200">
+                                <tr id="error-row-0">
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-15 14:32:01</td>
+                                    <td class="px-5 py-4">CalManager</td>
+                                    <td class="px-5 py-4"><span id="error-badge-0" class="px-2.5 py-1 rounded-full text-xs bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Crítico</span></td>
+                                    <td id="error-msg-0" class="px-5 py-4">OAuth Token expired: Unable to modify calendar resources on primary accounts.</td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'error-0')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button>
+                                        <div id="dropdown-error-0" class="hidden absolute right-5 top-10 w-44 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openErrorModal(0)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="resolveError(0)" class="w-full text-left px-4 py-2 text-sm text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="error-row-1">
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-15 12:11:45</td>
+                                    <td class="px-5 py-4">DocuReader AI</td>
+                                    <td class="px-5 py-4"><span id="error-badge-1" class="px-2.5 py-1 rounded-full text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Advertencia</span></td>
+                                    <td id="error-msg-1" class="px-5 py-4">Rate Limit reached: Google Sheets spreadsheet modifications queued temporarily.</td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'error-1')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button>
+                                        <div id="dropdown-error-1" class="hidden absolute right-5 top-10 w-44 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openErrorModal(1)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="resolveError(1)" class="w-full text-left px-4 py-2 text-sm text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="error-row-2">
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-15 09:05:12</td>
+                                    <td class="px-5 py-4">CalManager</td>
+                                    <td class="px-5 py-4"><span id="error-badge-2" class="px-2.5 py-1 rounded-full text-xs bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Crítico</span></td>
+                                    <td id="error-msg-2" class="px-5 py-4">Failed connection: slack.com host unreachable during alert dispatch.</td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'error-2')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button>
+                                        <div id="dropdown-error-2" class="hidden absolute right-5 top-10 w-44 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openErrorModal(2)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="resolveError(2)" class="w-full text-left px-4 py-2 text-sm text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="error-row-3">
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-14 22:45:10</td>
+                                    <td class="px-5 py-4">SupportBot Pro</td>
+                                    <td class="px-5 py-4"><span id="error-badge-3" class="px-2.5 py-1 rounded-full text-xs bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">Advertencia</span></td>
+                                    <td id="error-msg-3" class="px-5 py-4">Context window saturation (8192 tokens). Invoking automatic summaries.</td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'error-3')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button>
+                                        <div id="dropdown-error-3" class="hidden absolute right-5 top-10 w-44 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openErrorModal(3)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="resolveError(3)" class="w-full text-left px-4 py-2 text-sm text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="error-row-4">
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-14 18:30:19</td>
+                                    <td class="px-5 py-4">WebScout</td>
+                                    <td class="px-5 py-4"><span id="error-badge-4" class="px-2.5 py-1 rounded-full text-xs bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">Crítico</span></td>
+                                    <td id="error-msg-4" class="px-5 py-4">Target site block: Cloudflare challenge triggered on news.ycombinator.com.</td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'error-4')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button>
+                                        <div id="dropdown-error-4" class="hidden absolute right-5 top-10 w-44 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openErrorModal(4)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="resolveError(4)" class="w-full text-left px-4 py-2 text-sm text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="error-row-5">
+                                    <td class="px-5 py-4 whitespace-nowrap">2026-07-14 15:10:04</td>
+                                    <td class="px-5 py-4">SupportBot Pro</td>
+                                    <td class="px-5 py-4"><span id="error-badge-5" class="px-2.5 py-1 rounded-full text-xs bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">Información</span></td>
+                                    <td id="error-msg-5" class="px-5 py-4">Periodic model health query resolved successfully (latency: 142ms).</td>
+                                    <td class="px-5 py-4 text-right relative">
+                                        <button onclick="toggleDropdown(event, 'error-5')" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Acciones de log">⋮</button>
+                                        <div id="dropdown-error-5" class="hidden absolute right-5 top-10 w-44 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg z-40 text-left">
+                                            <button onclick="openErrorModal(5)" class="w-full text-left px-4 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Ver detalle</button>
+                                            <button onclick="resolveError(5)" class="w-full text-left px-4 py-2 text-sm text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20">Marcar como resuelto</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL GENÉRICO REUTILIZABLE -->
+    <div id="modal-backdrop" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm" onclick="closeModal()">
+        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-xl max-w-lg w-full mx-4 max-h-[85vh] overflow-y-auto" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between p-5 border-b border-slate-200 dark:border-slate-800">
+                <h3 id="modal-title" class="text-lg font-semibold text-slate-800 dark:text-white"></h3>
+                <button onclick="closeModal()" class="h-8 w-8 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="modal-body" class="p-5 text-sm text-slate-700 dark:text-slate-200"></div>
+            <div class="flex justify-end p-4 border-t border-slate-200 dark:border-slate-800">
+                <button onclick="closeModal()" class="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clases del sidebar para estado activo e inactivo.
+        const ACTIVE_CLASSES = [
+            'bg-brand-50',
+            'text-brand-700',
+            'dark:bg-brand-950/50',
+            'dark:text-brand-400'
+        ];
+
+        const INACTIVE_CLASSES = [
+            'text-slate-600',
+            'hover:bg-slate-100',
+            'dark:text-slate-400',
+            'dark:hover:bg-slate-800'
+        ];
+
+        const SECTION_TITLES = {
+            dashboard: 'Dashboard',
+            users: 'Usuarios',
+            agents: 'Agentes',
+            skills: 'Habilidades',
+            contracts: 'Contratos',
+            errors: 'Registro de Errores'
+        };
+
+        // Muestra la sección activa y actualiza menú + título.
+        function switchSection(sectionId) {
+            document.querySelectorAll('main > section[id^="section-"]').forEach((section) => {
+                section.classList.add('hidden');
+            });
+
+            const activeSection = document.getElementById(`section-${sectionId}`);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+            }
+
+            document.querySelectorAll('nav > button[id^="nav-"]').forEach((button) => {
+                button.classList.remove(...ACTIVE_CLASSES);
+                button.classList.add(...INACTIVE_CLASSES);
+            });
+
+            const activeButton = document.getElementById(`nav-${sectionId}`);
+            if (activeButton) {
+                activeButton.classList.remove(...INACTIVE_CLASSES);
+                activeButton.classList.add(...ACTIVE_CLASSES);
+            }
+
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) {
+                pageTitle.textContent = SECTION_TITLES[sectionId] || 'Sección';
+            }
+
+            closeAllDropdowns();
+        }
+
+        // Sincroniza icono de tema con el estado actual.
+        function updateThemeIcon() {
+            const html = document.documentElement;
+            const themeIcon = document.getElementById('theme-icon');
+            if (!themeIcon) return;
+
+            const isDark = html.classList.contains('dark');
+            themeIcon.classList.remove('fa-moon', 'fa-sun');
+            themeIcon.classList.add(isDark ? 'fa-sun' : 'fa-moon');
+        }
+
+        // ---- DATOS (deben coincidir con config-dev.yaml) ----
+        const USERS = [
+            { name: "María Camino", email: "maria.camino@agenthub.com", plan: "Enterprise", status: "Activo", registered: "2024-11-03", ltv: "$12,400", lastIp: "192.168.4.21" },
+            { name: "Carlos Rivas", email: "carlos.rivas@novacorp.io", plan: "Pro", status: "Activo", registered: "2025-02-18", ltv: "$4,200", lastIp: "10.0.2.115" },
+            { name: "Lucía Moreno", email: "lucia.moreno@aether.ai", plan: "Basic", status: "Pendiente", registered: "2025-06-01", ltv: "$0", lastIp: "172.16.9.7" },
+            { name: "Andrés Silva", email: "andres.silva@orionlabs.dev", plan: "Pro", status: "Inactivo", registered: "2024-08-22", ltv: "$6,800", lastIp: "192.168.1.50" },
+            { name: "Sofía Cárdenas", email: "sofia.cardenas@zenstack.app", plan: "Enterprise", status: "Activo", registered: "2023-12-10", ltv: "$21,300", lastIp: "10.0.0.88" },
+        ];
+
+        const ERRORS = [
+            { trace: "Error: Token Expired\n  at google_api_auth.js:42:15\n  at processTicksAndRejections (node:internal/process/task_queues:95:5)" },
+            { trace: "Warning: HTTP 429 Too Many Requests\n  at sheets_api.js:109:12" },
+            { trace: "Error: ECONNREFUSED 3.120.141.111:443\n  at tcp_connect.js:84:21" },
+            { trace: "Info: Summary Triggered\n  at openai_bridge.js:321:9" },
+            { trace: "Error: Verification Required (403 Forbidden)\n  at scraper.js:203:31" },
+            { trace: "Success: OK\n  at monitor.js:12:4" },
+        ];
+
+        // ---- DROPDOWN GENÉRICO ----
+        function toggleDropdown(event, id) {
+            event.stopPropagation();
+            const dropdown = document.getElementById(`dropdown-${id}`);
+            const wasOpen = dropdown && !dropdown.classList.contains('hidden');
+            closeAllDropdowns();
+            if (dropdown && !wasOpen) {
+                dropdown.classList.remove('hidden');
+            }
+        }
+
+        function closeAllDropdowns() {
+            document.querySelectorAll('[id^="dropdown-"]').forEach((el) => el.classList.add('hidden'));
+        }
+
+        document.addEventListener('click', closeAllDropdowns);
+
+        // ---- MODAL GENÉRICO ----
+        function openModal(title, bodyHtml) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = bodyHtml;
+            document.getElementById('modal-backdrop').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal-backdrop').classList.add('hidden');
+        }
+
+        // ---- USUARIOS ----
+        function openUserModal(index) {
+            const user = USERS[index];
+            closeAllDropdowns();
+            openModal(user.name, `
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="h-14 w-14 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 flex items-center justify-center text-xl font-bold">
+                        ${user.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                        <p class="font-semibold text-slate-800 dark:text-white">${user.name}</p>
+                        <p class="text-slate-500 text-xs">${user.email}</p>
+                    </div>
+                </div>
+                <dl class="grid grid-cols-2 gap-3 text-sm">
+                    <div><dt class="text-slate-500 text-xs">Plan</dt><dd class="font-medium">${user.plan}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Estado</dt><dd class="font-medium">${user.status}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Registrado</dt><dd class="font-medium">${user.registered}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Valor de vida (LTV)</dt><dd class="font-medium">${user.ltv}</dd></div>
+                    <div class="col-span-2"><dt class="text-slate-500 text-xs">Última IP de acceso</dt><dd class="font-medium">${user.lastIp}</dd></div>
+                </dl>
+            `);
+        }
+
+        function deleteUser(index) {
+            closeAllDropdowns();
+            if (confirm(`¿Seguro que quieres eliminar a ${USERS[index].name}?`)) {
+                alert(`${USERS[index].name} fue eliminado (simulado, sin backend).`);
+            }
+        }
+
+        // ---- ERROR LOG ----
+        function openErrorModal(index) {
+            closeAllDropdowns();
+            openModal('Detalle del error', `
+                <pre class="bg-slate-900 text-red-400 text-xs rounded-lg p-4 overflow-x-auto whitespace-pre-wrap"><code>${ERRORS[index].trace}</code></pre>
+            `);
+        }
+
+        function resolveError(index) {
+            closeAllDropdowns();
+            const badge = document.getElementById(`error-badge-${index}`);
+            const msg = document.getElementById(`error-msg-${index}`);
+            badge.textContent = 'Resuelto';
+            badge.className = 'px-2.5 py-1 rounded-full text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300';
+            msg.classList.add('line-through', 'text-slate-400', 'dark:text-slate-500');
+        }
+
+        // ---- AGENTES ----
+        const AGENTS = [
+            { name: "SupportBot Pro", owner: "María Camino", prompt: "You are a professional customer support assistant. Always respond with empathy, analyze standard schemas, and resolve issues fast." },
+            { name: "DocuReader AI", owner: "Carlos Rivas", prompt: "Parse uploaded financial PDF documents, extract line-item valuations, and export structured JSON objects matching client schemas." },
+            { name: "CalManager", owner: "Lucía Moreno", prompt: "Schedule cross-timezone team meetings. Cross-reference schedules, propose three optimal slots, and handle invite rejections gracefully." },
+            { name: "WebScout", owner: "Andrés Silva", prompt: "Monitor tech news sites every 30 minutes. Aggregate articles concerning LLMs, tag categories, and draft daily bulleted newsletters." },
+        ];
+
+        function toggleSkills(index) {
+            const list = document.getElementById(`skills-list-${index}`);
+            const caret = document.getElementById(`skills-caret-${index}`);
+            const isOpen = list.classList.contains('max-h-96');
+            if (isOpen) {
+                list.classList.remove('max-h-96');
+                list.classList.add('max-h-0');
+                caret.classList.remove('fa-caret-up');
+                caret.classList.add('fa-caret-down');
+            } else {
+                list.classList.remove('max-h-0');
+                list.classList.add('max-h-96');
+                caret.classList.remove('fa-caret-down');
+                caret.classList.add('fa-caret-up');
+            }
+        }
+
+        function openAgentModal(index) {
+            const agent = AGENTS[index];
+            closeAllDropdowns();
+            openModal(`Configurar ${agent.name}`, `
+                <label class="block text-xs text-slate-500 mb-2">System Prompt (editable)</label>
+                <textarea class="w-full h-40 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 text-sm text-slate-700 dark:text-slate-200">${agent.prompt}</textarea>
+            `);
+        }
+
+        function deleteAgent(index) {
+            closeAllDropdowns();
+            if (confirm(`¿Seguro que quieres eliminar a ${AGENTS[index].name}?`)) {
+                alert(`${AGENTS[index].name} fue eliminado (simulado, sin backend).`);
+            }
+        }
+
+        // ---- HABILIDADES ----
+        const SKILLS = [
+            { name: "Zendesk Integrator", category: "Integraciones", status: "Activa", usedBy: ["SupportBot Pro"], description: "Conecta al agente con tickets de soporte de Zendesk para leer y actualizar casos en tiempo real." },
+            { name: "Semantic Search", category: "IA / NLP", status: "Activa", usedBy: ["SupportBot Pro"], description: "Búsqueda semántica sobre la base de conocimiento interna para encontrar respuestas relevantes a consultas de clientes." },
+            { name: "Auto-Responder", category: "Automatización", status: "Activa", usedBy: ["SupportBot Pro"], description: "Genera y envía respuestas automáticas basadas en plantillas aprobadas por el equipo de soporte." },
+            { name: "PDF Parser", category: "Documentos", status: "Inactiva", usedBy: ["DocuReader AI"], description: "Extrae texto, tablas y valores clave de documentos PDF financieros para su posterior procesamiento." },
+            { name: "Google Sheets Sync", category: "Productividad", status: "Inactiva", usedBy: ["DocuReader AI"], description: "Sincroniza los datos extraídos con hojas de cálculo de Google Sheets siguiendo el esquema del cliente." },
+            { name: "Google Calendar API", category: "Productividad", status: "En falla", usedBy: ["CalManager"], description: "Lee y escribe eventos en calendarios de Google Calendar para coordinar reuniones entre husos horarios." },
+            { name: "Slack Notifier", category: "Comunicación", status: "En falla", usedBy: ["CalManager"], description: "Envía notificaciones y alertas a canales de Slack cuando ocurren cambios en el calendario." },
+            { name: "Web Crawler", category: "Web", status: "Activa", usedBy: ["WebScout"], description: "Rastrea sitios de noticias tecnológicas cada 30 minutos para detectar artículos nuevos relevantes." },
+            { name: "Newsletter drafter", category: "Contenido", status: "Activa", usedBy: ["WebScout"], description: "Redacta borradores de newsletter en formato de bullets a partir de los artículos recopilados por el crawler." },
+        ];
+
+        function openSkillModal(index) {
+            const skill = SKILLS[index];
+            closeAllDropdowns();
+            openModal(skill.name, `
+                <dl class="grid grid-cols-2 gap-3 text-sm mb-4">
+                    <div><dt class="text-slate-500 text-xs">Categoría</dt><dd class="font-medium">${skill.category}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Estado</dt><dd class="font-medium">${skill.status}</dd></div>
+                    <div class="col-span-2"><dt class="text-slate-500 text-xs">Agentes que la usan</dt><dd class="font-medium">${skill.usedBy.join(', ')}</dd></div>
+                </dl>
+                <p class="text-sm text-slate-600 dark:text-slate-300">${skill.description}</p>
+            `);
+        }
+
+        function deleteSkill(index) {
+            closeAllDropdowns();
+            if (confirm(`¿Seguro que quieres eliminar la habilidad ${SKILLS[index].name}?`)) {
+                alert(`${SKILLS[index].name} fue eliminada (simulado, sin backend).`);
+            }
+        }
+
+        // ---- CONTRATOS DE AGENTES ----
+        const CONTRACTS = [
+            { agent: "SupportBot Pro", client: "María Camino", plan: "Enterprise", fee: "$1,200 / mes", renewal: "2026-11-03", status: "Activo", terms: "Incluye soporte prioritario 24/7, SLA de uptime del 99.9% y hasta 50,000 interacciones mensuales. Renovación automática salvo cancelación con 30 días de aviso." },
+            { agent: "DocuReader AI", client: "Carlos Rivas", plan: "Pro", fee: "$450 / mes", renewal: "2025-02-18", status: "Vencido", terms: "Incluye soporte en horario laboral y SLA de uptime del 99.5%. El contrato venció y el agente quedó inactivo hasta renovación manual del cliente." },
+            { agent: "CalManager", client: "Lucía Moreno", plan: "Basic", fee: "$0 / mes (prueba)", renewal: "2025-07-01", status: "Pendiente", terms: "Periodo de prueba de 30 días sin costo. Requiere confirmación de método de pago antes de la fecha de renovación para continuar activo." },
+            { agent: "WebScout", client: "Andrés Silva", plan: "Pro", fee: "$600 / mes", renewal: "2026-08-22", status: "Activo", terms: "Incluye soporte en horario laboral, SLA de uptime del 99.5% y hasta 5,000 páginas rastreadas por día. Renovación automática salvo cancelación con 15 días de aviso." },
+        ];
+
+        function openContractModal(index) {
+            const contract = CONTRACTS[index];
+            closeAllDropdowns();
+            openModal(`Contrato — ${contract.agent}`, `
+                <dl class="grid grid-cols-2 gap-3 text-sm mb-4">
+                    <div><dt class="text-slate-500 text-xs">Cliente</dt><dd class="font-medium">${contract.client}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Plan</dt><dd class="font-medium">${contract.plan}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Tarifa mensual</dt><dd class="font-medium">${contract.fee}</dd></div>
+                    <div><dt class="text-slate-500 text-xs">Renovación</dt><dd class="font-medium">${contract.renewal}</dd></div>
+                    <div class="col-span-2"><dt class="text-slate-500 text-xs">Estado</dt><dd class="font-medium">${contract.status}</dd></div>
+                </dl>
+                <p class="text-sm text-slate-600 dark:text-slate-300">${contract.terms}</p>
+            `);
+        }
+
+        function deleteContract(index) {
+            closeAllDropdowns();
+            if (confirm(`¿Seguro que quieres cancelar el contrato de ${CONTRACTS[index].agent}?`)) {
+                alert(`El contrato de ${CONTRACTS[index].agent} fue cancelado (simulado, sin backend).`);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    updateThemeIcon();
+                });
+            }
+
+            updateThemeIcon();
+            switchSection('dashboard');
+        });
+
+        window.switchSection = switchSection;
+    </script>
+</body>
+</html>
